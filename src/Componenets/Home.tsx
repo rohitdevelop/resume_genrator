@@ -1,11 +1,82 @@
 import React from "react";
-import { User, Mail, Phone, MapPin, Briefcase, GraduationCap, Award, Plus, Minus } from "lucide-react";
-import { useResume } from "../Context/ResumeContext"; // adjust path
+import { User , Briefcase, GraduationCap, Award, Plus, Minus } from "lucide-react";
+// Assuming the path is correct and the ResumeContext provides the state and setter
+import { useResume } from "../Context/ResumeContext"; 
+
+// --- TYPE DEFINITIONS ---
+// These types are necessary for the TypeScript to correctly understand the structure
+// of the resume data and its sections, based on the component's logic.
+
+interface PersonalInfo {
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedIn: string;
+  portfolio: string;
+  summary: string;
+}
+
+interface Experience {
+  id: string;
+  company: string;
+  position: string;
+  startDate: string;
+  endDate: string;
+  isCurrentRole: boolean;
+  location: string;
+  description: string;
+}
+
+interface Education {
+  id: string;
+  institution: string;
+  degree: string;
+  fieldOfStudy: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  gpa?: string; // Made optional as it's not present in the newEducation object
+}
+
+interface Skill {
+  id: string;
+  name: string;
+  category: string;
+  level: number; // 1-5 range is best represented as a number
+}
+
+interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  date: string;
+  expiryDate?: string; // Made optional as it's not present in the newCertification object
+}
+
+interface ResumeData {
+  personalInfo: PersonalInfo;
+  experience: Experience[];
+  education: Education[];
+  skills: Skill[];
+  certifications: Certification[];
+}
+
+// Assuming the context hook returns this structure
+interface ResumeContextType {
+    resumeData: ResumeData;
+    setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
+}
+
+// --- HOME COMPONENT ---
 
 const Home: React.FC = () => {
-  const { resumeData, setResumeData } = useResume();
+  // TypeScript will now correctly infer the types from the useResume hook based on ResumeContextType
+  // Assuming the structure is provided by useResume.
+  const { resumeData, setResumeData } = useResume() as ResumeContextType;
 
-  const updatePersonalInfo = (field: keyof typeof resumeData.personalInfo, value: string) => {
+  // Personal Info function
+  const updatePersonalInfo = (field: keyof PersonalInfo, value: string) => {
     setResumeData(prev => ({
       ...prev,
       personalInfo: { ...prev.personalInfo, [field]: value },
@@ -30,6 +101,7 @@ const Home: React.FC = () => {
     }));
   };
 
+  // Fixed type for value to include boolean and string (for date, text inputs)
   const updateExperience = (id: string, field: keyof Experience, value: string | boolean) => {
     setResumeData(prev => ({
       ...prev,
@@ -55,7 +127,8 @@ const Home: React.FC = () => {
       fieldOfStudy: "",
       startDate: "",
       endDate: "",
-      location: ""
+      location: "",
+      // gpa is intentionally omitted here or set to undefined/empty string
     };
     setResumeData(prev => ({
       ...prev,
@@ -63,6 +136,7 @@ const Home: React.FC = () => {
     }));
   };
 
+  // Fixed type for field to include the optional 'gpa'
   const updateEducation = (id: string, field: keyof Education, value: string) => {
     setResumeData(prev => ({
       ...prev,
@@ -85,7 +159,7 @@ const Home: React.FC = () => {
       id: Date.now().toString(),
       name: "",
       category: "",
-      level: 3
+      level: 3 // Default level
     };
     setResumeData(prev => ({
       ...prev,
@@ -93,6 +167,7 @@ const Home: React.FC = () => {
     }));
   };
 
+  // Fixed type for value to allow string (for name/category) or number (for level)
   const updateSkill = (id: string, field: keyof Skill, value: string | number) => {
     setResumeData(prev => ({
       ...prev,
@@ -115,7 +190,8 @@ const Home: React.FC = () => {
       id: Date.now().toString(),
       name: "",
       issuer: "",
-      date: ""
+      date: "",
+      // expiryDate is intentionally omitted here or set to undefined/empty string
     };
     setResumeData(prev => ({
       ...prev,
@@ -123,6 +199,7 @@ const Home: React.FC = () => {
     }));
   };
 
+  // Fixed type for field to include the optional 'expiryDate'
   const updateCertification = (id: string, field: keyof Certification, value: string) => {
     setResumeData(prev => ({
       ...prev,
@@ -463,7 +540,7 @@ const Home: React.FC = () => {
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium mb-1">Proficiency Level (1-5)</label>
+                  <label className="block text-sm font-medium mb-1">Proficiency Level ({skill.level}/5)</label>
                   <input
                     type="range"
                     min="1"
@@ -474,7 +551,7 @@ const Home: React.FC = () => {
                   />
                   <div className="flex justify-between text-xs text-gray-500">
                     <span>Beginner</span>
-                    <span>Intermediate</span>
+                    <span className="ml-10">Intermediate</span>
                     <span>Expert</span>
                   </div>
                 </div>

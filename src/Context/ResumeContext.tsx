@@ -58,11 +58,9 @@ export interface ResumeContextType {
   setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
 }
 
-// ✅ Export only Context (not hook)
-export const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
+ export const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
-// ✅ Create a custom hook to use the context
-export const useResume = (): ResumeContextType => {
+ export const useResume = (): ResumeContextType => {
   const context = useContext(ResumeContext);
   if (context === undefined) {
     throw new Error("useResume must be used within a ResumeProvider");

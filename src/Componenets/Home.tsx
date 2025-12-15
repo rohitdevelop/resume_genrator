@@ -1,8 +1,15 @@
-import React from "react";
-import { Search, Building2, MousePointerClick } from "lucide-react";
+ import { LucideIcon, Search, Building2, MousePointerClick } from "lucide-react";
 
-const Home = () => {
-  const features = [
+// ✅ Type definition for feature items
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  color: string;
+}
+
+const Home: React.FC = () => {
+  const features: Feature[] = [
     {
       icon: Search,
       title: "Smart Search",
@@ -37,8 +44,7 @@ const Home = () => {
         </h1>
 
         <p className="mt-6 text-gray-500 max-w-2xl mx-auto text-lg">
-          Discover thousands of job opportunities and get hired by
-          top companies worldwide.
+          Discover thousands of job opportunities and get hired by top companies worldwide.
         </p>
 
         <div className="mt-10 flex justify-center gap-4">
@@ -53,7 +59,7 @@ const Home = () => {
       </section>
 
       {/* STATS */}
-      <section className="bg-white py-16 ">
+      <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             ["10K+", "Jobs Posted"],
@@ -62,9 +68,7 @@ const Home = () => {
             ["98%", "Success Rate"],
           ].map(([value, label], i) => (
             <div key={i}>
-              <h2 className="text-3xl font-bold text-blue-600">
-                {value}
-              </h2>
+              <h2 className="text-3xl font-bold text-blue-600">{value}</h2>
               <p className="text-gray-500">{label}</p>
             </div>
           ))}
@@ -74,9 +78,7 @@ const Home = () => {
       {/* FEATURES */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Why Choose Us
-          </h2>
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">Why Choose Us</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"></div>
         </div>
 
@@ -86,10 +88,7 @@ const Home = () => {
             return (
               <div
                 key={idx}
-                className="group relative bg-white rounded-3xl p-8
-                border border-gray-100 shadow-sm
-                hover:shadow-xl hover:-translate-y-2
-                transition-all duration-300"
+                className="group relative bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
               >
                 {/* soft gradient glow */}
                 <div
@@ -107,9 +106,7 @@ const Home = () => {
                     {feature.title}
                   </h3>
 
-                  <p className="text-gray-500 leading-relaxed">
-                    {feature.description}
-                  </p>
+                  <p className="text-gray-500 leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             );
@@ -119,12 +116,8 @@ const Home = () => {
 
       {/* CTA */}
       <section className="py-20 text-center bg-gradient-to-r from-blue-600 to-cyan-500">
-        <h2 className="text-3xl font-bold text-white">
-          Ready to start your career?
-        </h2>
-        <p className="mt-4 text-blue-100">
-          Join thousands of professionals today.
-        </p>
+        <h2 className="text-3xl font-bold text-white">Ready to start your career?</h2>
+        <p className="mt-4 text-blue-100">Join thousands of professionals today.</p>
         <button className="mt-6 px-8 py-3 bg-white text-blue-600 font-semibold rounded-xl hover:scale-105 transition">
           Join Now
         </button>

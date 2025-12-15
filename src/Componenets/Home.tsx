@@ -1,4 +1,5 @@
- import { LucideIcon, Search, Building2, MousePointerClick } from "lucide-react";
+ import { Search, Building2, MousePointerClick } from "lucide-react";
+ import type { LucideIcon } from "lucide-react";
 
 // ✅ Type definition for feature items
 interface Feature {
